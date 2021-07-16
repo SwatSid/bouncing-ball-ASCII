@@ -1,11 +1,5 @@
 import time
 
-g = -9.8
-u = 0
-dt = 0.06
-
-s_o = 1.5
-
 def simulate_timestep(s_o, u, g, dt):
     v = u + g*dt
     s = s_o + u*dt + (g*dt**2)/2
@@ -16,25 +10,39 @@ def display_bounce(pos):
     for i in range(pos):
         print(" ", end='')
     print("o")
+
+def main():
     
-while True:
+    # Initial conditions
+    s_o = 1.5
+    u = 0
     
-    s, v = simulate_timestep(s_o, u, g, dt)
+    # Simulation conditions
+    g = -9.8
+    dt = 0.06
     
-    # variable to facilitate printing ascii ball
-    pos = int(s * 100)
+    while True:
     
-    if pos < 0:
-        pos = 0
+        s, v = simulate_timestep(s_o, u, g, dt)
         
-    display_bounce(pos)
-    
-    u = v
-    
-    # Bounce condition
-    if (s <= 0 and s_o >= 0):
-        u = -u*0.95
+        # variable to facilitate printing ascii ball
+        pos = int(s * 100)
         
-    s_o = s
+        if pos < 0:
+            pos = 0
+            
+        display_bounce(pos)
+        
+        u = v
+        
+        # Bounce condition
+        if (s <= 0 and s_o >= 0):
+            u = -u*0.95
+            
+        s_o = s
+        
+        time.sleep(0.01)
     
-    time.sleep(0.01)
+if __name__ == "__main__":
+    main() 
+    
