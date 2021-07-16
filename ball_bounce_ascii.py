@@ -18,14 +18,14 @@ def display_bounce(pos):
 def main():
     
     # Initial conditions
-    s_o = 0
-    s = s_o
-    u = 5.5
-    v = u
+    s = 0
+    v = 5.5
     
     # Simulation conditions
     g = -9.8
     dt = 0.06
+    
+    pos_count = 0
     
     while True:
         # variable to facilitate printing ascii ball
@@ -33,21 +33,24 @@ def main():
         
         if pos < 0:
             pos = 0
-            
+        else:
+            pos_count = 0
+        
+        
         display_bounce(pos)
         
         s, v = simulate_timestep(s, v, g, dt)
         
-        # u = v
-        
-        # Bounce condition
-        # if (s <= 0 and s_o >= 0):
-            # u = -u*0.95
-            
-        # s_o = s
-        
         # Time delay to keep simulation slow enuf for human eye to follow
         time.sleep(0.01)
+        
+        
+        if pos == 0:
+            pos_count += 1
+            
+        # Break condition
+        if pos_count > 10:
+            break
     
 if __name__ == "__main__":
     main() 
